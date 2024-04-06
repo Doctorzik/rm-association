@@ -3,8 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  console.log("i am in router");
-  res.send("Hello World");
+  res.send("Hello World to Preciuos");
 });
 
 router.use("/attendance", require("./attendance"));
