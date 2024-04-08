@@ -47,6 +47,11 @@ const memberSchema = new Schema({
     type: String,
     required: true,
   },
+  missionPresident: [
+     {
+      type : String
+     }
+  ],
   returnDate: {
     type: Date,
     required: true,
@@ -56,6 +61,14 @@ const memberSchema = new Schema({
     required: true,
   },
   hobbies: [String],
+
+  bestquote: {
+    type: String,
+     required: true, 
+     default: "I Love my Mission"
+  }
+
+
 });
 
 // Define the schema for the Attendance collection
