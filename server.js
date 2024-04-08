@@ -4,7 +4,8 @@ const dotenv = require("dotenv").config();
 const cors = require("cors");
 const passport = require("passport");
 const session = require("express-session");
-const mongoDb = require("./config/config.js");
+const mongoDb = require("./config/database.js");
+const passportConfiguration = require("./config/passport.js");
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 6000,
+      maxAge: 6000 * 60,
     },
   })
 );
@@ -48,9 +49,21 @@ app.use(
 );
 
 app.use(cors({ origin: "*" }));
+app.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.user);
+  next();
+});
 
-app.use("/", require("./routes")
-)
+app.use("/", require("./routes/index.js"));
+
+app.get("/", (req, res) => {
+  res.send(
+    req.session.user !== undefined
+      ? `Logged in as ${req.session.user.username}`
+      : "Logged Out"
+  );
+});
 
 mongoDb.initDb((err) => {
   if (err) {

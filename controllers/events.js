@@ -1,4 +1,3 @@
-const database = require("../config/config");
 const { Event } = require("../models/models");
 
 const getSingleEventById = async (req, res) => {
@@ -15,14 +14,19 @@ const getAllEvents = async (req, res) => {
 };
 
 const createEvent = async (req, res) => {
-  try {
-    const event = new Event(req.body);
-    event.save().then(() => {
-      res.send().status(201);
+  Event.validate(req.body)
+    .then((validatedData) => {
+      // The document passed validation
+   
+      const event = new Event(validatedData);
+      event.save().then(() => {
+        res.send().status(201);
+      });
+    })
+    .catch((validationError) => {
+      // The document failed validation
+      res.status(400).json({ error: validationError.message });
     });
-  } catch (error) {
-    res.send().status(500).json({ message: error.message });
-  }
 };
 
 const deleteEvent = async (req, res) => {
@@ -36,10 +40,13 @@ const deleteEvent = async (req, res) => {
 };
 const updateEvent = async (req, res) => {
   
+ 
   try {
     await Event.findByIdAndUpdate(res.event._id, req.body);
     res.status(202).json({ message: "Successfully Updated" });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
 };
 
 module.exports = {

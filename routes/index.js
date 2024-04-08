@@ -1,10 +1,26 @@
 const express = require("express");
-
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Hello World to Preciuos");
+const passport = require("passport");
+const passwordUtils = require("../lib/passwordUtils");
+const { User } = require("../models/models");
+
+
+router.post("/login", passport.authenticate("local"), (req, res) => {
+
+  req.session.user = req.user;
+  res.status(200).json({ message: "You logged in" });
 });
+router.get("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      next(err);
+    }
+    res.redirect("/");
+  });
+});
+
+router.use("/register", require("./users"))
 
 router.use("/attendance", require("./attendance"));
 router.use("/users", require("./users"));
@@ -12,10 +28,3 @@ router.use("/events", require("./events"));
 router.use("/members", require("./members"));
 
 module.exports = router;
-// router.use("/users", require("./users"));
-
-// router.use("/members", require("./members"));
-
-// router.use("/events", require("./events"));
-
-// router.use("/attendance", require("./attendance"));
