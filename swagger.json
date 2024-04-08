@@ -5,21 +5,17 @@
     "description": "This application stores resources for the return missionary application",
     "version": "1.0.0"
   },
-  "host": "localhost:5000",
+  "host": "rm-association.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["https"],
   "tags": [
     {
       "name": "attendance",
       "description": "Everything about attendance"
-    
     },
     {
       "name": "event",
       "description": "Access to events as they happen"
-     
     },
     {
       "name": "member",
@@ -425,8 +421,5 @@
       }
     }
   },
-  "schema": [
-    "https",
-    "http"
-  ]
+  "schema": ["https", "http"]
 }
