@@ -49,11 +49,7 @@ app.use(
 );
 
 app.use(cors({ origin: "*" }));
-app.use((req, res, next) => {
-  console.log(req.session);
-  console.log(req.user);
-  next();
-});
+
 
 app.use("/", require("./routes/index.js"));
 
