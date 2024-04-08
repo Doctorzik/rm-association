@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv")
+dotenv.config();
 const cors = require("cors");
 const passport = require("passport");
 const session = require("express-session");
