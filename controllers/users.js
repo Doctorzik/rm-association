@@ -1,4 +1,5 @@
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv")
+dotenv.config();
 const { User } = require("../models/models");
 const passwordUtils = require("../lib/passwordUtils");
 
