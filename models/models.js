@@ -94,25 +94,11 @@ const attendanceSchema = new Schema({
   },
 });
 
-// Define the schema for the Missionary Experiences collection
-const missionaryExperienceSchema = new Schema({
-  memberId: {
-    type: Schema.Types.ObjectId,
-    ref: "Member",
-    required: true,
-  },
 
-  description: {
-    type: String,
-    required: true,
-  },
-});
+
 
 // Create a Mongoose model based on the schema
-const MissionaryExperience = model(
-  "MissionaryExperience",
-  missionaryExperienceSchema
-);
+
 
 // Create a Mongoose model based on Attendance  schema
 const Attendance = model("Attendance", attendanceSchema);
@@ -129,6 +115,5 @@ module.exports = {
   Event,
   Member,
   Attendance,
-  MissionaryExperience,
   User,
 };
