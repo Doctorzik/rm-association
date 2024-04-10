@@ -25,7 +25,7 @@
       "description": "Operations on members"
     },
     {
-      "name": "user",
+      "name": "users",
       "description": "Operations about user"
     }
   ],
@@ -52,34 +52,30 @@
         }
       },
       "post": {
+        "tags": ["attendance"],
+        "summary": "Post an attendance",
         "description": "Post an attendance",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "firstname": {
-                  "example": "any"
+                "eventId": {
+                  "an obectId of event": "284729279",
+                  "required": true
                 },
-                "lastname": {
-                  "example": "any"
+                "memberId": {
+                  "an objectid of member": "jsdjs372377",
+                  "required": true
                 },
-                "email": {
-                  "example": "any"
+                "status": {
+                  "present": "present",
+                  "required": true
                 },
-                "favorite_color": {
-                  "example": "any"
-                },
-                "birthdate": {
-                  "example": "any"
+                "timestamp": {
+                  "date": ""
                 }
               }
             }
@@ -328,17 +324,47 @@
         }
       },
       "post": {
-        "tag": ["event"],
-        "description": "Add an event",
+        "tags": ["event"],
+        "summary": "Add an event",
+        "description": "Event to Add",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "name": "nameofevent",
+                  "required": true
+                },
+                "location": {
+                  "location": "locationofevent",
+                  "required": true
+                },
+                "description": {
+                  "description": "describe what the event is all about",
+                  "required": true
+                },
+                "date": {
+                  "date": "date format"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+          "202": {
+            "description": "Accepted"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -374,15 +400,15 @@
         }
       },
       "delete": {
-        "tags": ["attendance"],
-        "summary": "Deletes an attendance",
-        "description": "delete attendance",
-        "operationId": "deleteAttendance",
+        "tags": ["event"],
+        "summary": "Deletes an event",
+        "description": "delete an event",
+        "operationId": "deleteEvent",
         "parameters": [
           {
-            "name": "attendanceId",
+            "name": "eventId",
             "in": "path",
-            "description": "Attendance id to delete",
+            "description": "Event id to delete",
             "required": true,
             "schema": {
               "type": "string",
@@ -397,9 +423,9 @@
         }
       },
       "put": {
-        "tags": ["attendance"],
-        "summary": "Update an attendance",
-        "description": "Attendance to update",
+        "tags": ["event"],
+        "summary": "Update an event",
+        "description": "Event to update",
         "parameters": [
           {
             "name": "id",
@@ -462,7 +488,49 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": ["member"],
+        "description": "Input a single member",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "name": "nameofmember",
+                  "required": true
+                },
+                "email": {
+                  "email": "memberemail",
+                  "required": true
+                },
+                "missionserved": {
+                  "missionserved": "the name of the mission",
+                  "required": true
+                },
+                "missionPresident": {
+                  "missionPresident": "missionPresidentname"
+                },
+                "returnDate": {
+                  "returnDate": "date of return",
+                  "required": true
+                },
+                "currentLocation": {
+                  "currentLocation": "currentLocation",
+                  "required": true
+                },
+                "hobbies": {
+                  "hobbies": ["String"],
+                  "required": true
+                },
+                "bestquote": {
+                  "bestquote": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
