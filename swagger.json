@@ -3,7 +3,10 @@
   "info": {
     "title": "Return Missionary Association Api",
     "description": "This application stores resources for the return missionary application",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "contact": {
+      "email": "easyboy@gmail.com"
+    }
   },
   "host": "rm-association.onrender.com",
   "basePath": "/",
@@ -27,107 +30,113 @@
     }
   ],
   "paths": {
-    "/login": {
-      "post": {
-        "description": "",
+    "/attendance/": {
+      "get": {
+        "tags": ["attendance"],
+        "summary": "Get all the attendance",
+        "description": "Get all the attendance",
         "responses": {
           "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/logout": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/register/": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "password": {
-                  "example": "any"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attendance"
                 }
               }
             }
           }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/attendance/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+        },
+        "422": {
+          "description": "Validation exception"
         }
       },
       "post": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/attendance/{id}": {
-      "get": {
-        "description": "",
+        "description": "Post an attendance",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstname": {
+                  "example": "any"
+                },
+                "lastname": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "favorite_color": {
+                  "example": "any"
+                },
+                "birthdate": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          },
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          }
+        },
+        "required": true,
+        "responses": {
+          "200": {
+            "description": "Attendance Successfully posted"
+          },
+          "400": {
+            "description": "Invalid Parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/attendance/{attendanceid}": {
+      "get": {
+        "tags": ["attendance"],
+        "summary": "Get attendance by Id",
+        "description": "Returns a single member attendance",
+        "operationalId": "getAttendanceById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of attendance to return",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
           },
           "404": {
             "description": "Not Found"
@@ -138,38 +147,62 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["attendance"],
+        "summary": "Deletes an attendance",
+        "description": "delete attendance",
+        "operationId": "deleteAttendance",
         "parameters": [
           {
-            "name": "id",
+            "name": "attendanceId",
             "in": "path",
+            "description": "Attendance id to delete",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "400": {
+            "description": "Invalid  attendance Id"
           }
         }
       },
       "put": {
-        "description": "",
+        "tags": ["attendance"],
+        "summary": "Update an attendance",
+        "description": "Attendance to update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "objectId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "eventId": {
+                  "an obectId of event": "284729279",
+                  "required": true
+                },
+                "memberId": {
+                  "an objectid of member": "jsdjs372377",
+                  "required": true
+                },
+                "status": {
+                  "present": "present",
+                  "required": true
+                },
+                "timestamp": {
+                  "date": ""
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -188,9 +221,10 @@
         }
       }
     },
-    "/users/": {
+    "/users/register": {
+      "tag": ["users"],
       "post": {
-        "description": "",
+        "description": "This route let you register users details to the data base",
         "parameters": [
           {
             "name": "body",
@@ -198,19 +232,68 @@
             "schema": {
               "type": "object",
               "properties": {
+                "username": {
+                  "username": "choose the desired user name for registration",
+                  "required": true
+                },
                 "password": {
-                  "example": "any"
+                  "password": "choose any strong password for registration",
+                  "required": true
+                }
+              }
+            }
+          }
+        ],
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          },
+
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          }
+        },
+        "required": true,
+        "responses": {
+          "200": {
+            "description": "Attendance Successfully posted"
+          },
+          "400": {
+            "description": "Invalid Parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "description": "Api users use this route to login with their username and password",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "username": "as used for registration"
+                },
+                "password": {
+                  "password": "as used for registation"
                 }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
@@ -218,9 +301,23 @@
         }
       }
     },
+    "users/logout": {
+      "get": {
+        "description": "Logout of the application",
+
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+
     "/events/": {
       "get": {
-        "description": "",
+        "tags": ["event"],
+        "summary": "Get all events",
+        "description": "Get all events",
         "responses": {
           "200": {
             "description": "OK"
@@ -231,7 +328,8 @@
         }
       },
       "post": {
-        "description": "",
+        "tag": ["event"],
+        "description": "Add an event",
         "responses": {
           "200": {
             "description": "OK"
@@ -247,18 +345,25 @@
     },
     "/events/{id}": {
       "get": {
-        "description": "",
+        "tags": ["event"],
+        "summary": "Get event by Id",
+        "description": "Returns a single member attendance",
+        "operationalId": "getEventById",
         "parameters": [
           {
-            "name": "id",
+            "name": "eventId",
             "in": "path",
+            "description": "ID of event to return",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
           },
           "404": {
             "description": "Not Found"
@@ -269,38 +374,62 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["attendance"],
+        "summary": "Deletes an attendance",
+        "description": "delete attendance",
+        "operationId": "deleteAttendance",
         "parameters": [
           {
-            "name": "id",
+            "name": "attendanceId",
             "in": "path",
+            "description": "Attendance id to delete",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "400": {
+            "description": "Invalid  attendance Id"
           }
         }
       },
       "put": {
-        "description": "",
+        "tags": ["attendance"],
+        "summary": "Update an attendance",
+        "description": "Attendance to update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "objectId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "name": "nameofevent",
+                  "required": true
+                },
+                "location": {
+                  "location": "locationofevent",
+                  "required": true
+                },
+                "description": {
+                  "description": "describe what the event is all about",
+                  "required": true
+                },
+                "date": {
+                  "date": "date format"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -321,6 +450,7 @@
     },
     "/members/": {
       "get": {
+        "tags": ["member"],
         "description": "",
         "responses": {
           "200": {
@@ -346,20 +476,27 @@
         }
       }
     },
-    "/members/{id}": {
+    "/members/{memberId}": {
       "get": {
-        "description": "",
+        "tags": ["member"],
+        "summary": "Get member by Id",
+        "description": "Returns a single member ",
+        "operationalId": "getMemberById",
         "parameters": [
           {
-            "name": "id",
+            "name": "memberId",
             "in": "path",
+            "description": "ID of member to return",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
           },
           "404": {
             "description": "Not Found"
@@ -370,38 +507,77 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["member"],
+        "summary": "Deletes a member",
+        "description": "delete member",
+        "operationId": "deleteMember",
         "parameters": [
           {
-            "name": "id",
+            "name": "memberId",
             "in": "path",
+            "description": "Member id to delete",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "400": {
+            "description": "Invalid  attendance Id"
           }
         }
       },
       "put": {
-        "description": "",
+        "tags": ["member"],
+        "summary": "Update a member",
+        "description": "Member to update",
         "parameters": [
           {
-            "name": "id",
+            "name": "memberId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "objectId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "name": "nameofmember",
+                  "required": true
+                },
+                "email": {
+                  "email": "memberemail",
+                  "required": true
+                },
+                "missionserved": {
+                  "missionserved": "the name of the mission",
+                  "required": true
+                },
+                "missionPresident": {
+                  "missionPresident": "missionPresidentname"
+                },
+                "returnDate": {
+                  "returnDate": "date of return",
+                  "required": true
+                },
+                "currentLocation": {
+                  "currentLocation": "currentLocation",
+                  "required": true
+                },
+                "hobbies": {
+                  "hobbies": ["String"],
+                  "required": true
+                },
+                "bestquote": {
+                  "bestquote": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {

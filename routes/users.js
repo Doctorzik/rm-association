@@ -1,19 +1,22 @@
-const router = require("express").Router()
-const usercontroller = require("../controllers/users.js")
+const router = require("express").Router();
+const usercontroller = require("../controllers/users.js");
 
+const passport = require("passport");
+const passwordUtils = require("../lib/passwordUtils");
+const { User } = require("../models/models");
+router.post("/login", passport.authenticate("local"), (req, res) => {
+  req.session.user = req.user;
+  res.status(200).json({ message: "You logged in" });
+});
+router.get("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      next(err);
+    }
+    res.redirect("/");
+  });
+});
 
+router.post("/register", usercontroller.createUser);
 
-
-router.post("/", usercontroller.createUser)
-
-
-
-
-
-
-
-module.exports = router
-
-
-
-
+module.exports = router;

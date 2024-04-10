@@ -48,9 +48,9 @@ const memberSchema = new Schema({
     required: true,
   },
   missionPresident: [
-     {
-      type : String
-     }
+    {
+      type: String,
+    },
   ],
   returnDate: {
     type: Date,
@@ -64,11 +64,9 @@ const memberSchema = new Schema({
 
   bestquote: {
     type: String,
-     required: true, 
-     default: "I Love my Mission"
-  }
-
-
+    required: true,
+    default: "I Love my Mission",
+  },
 });
 
 // Define the schema for the Attendance collection
@@ -94,11 +92,7 @@ const attendanceSchema = new Schema({
   },
 });
 
-
-
-
 // Create a Mongoose model based on the schema
-
 
 // Create a Mongoose model based on Attendance  schema
 const Attendance = model("Attendance", attendanceSchema);

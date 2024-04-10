@@ -1,6 +1,6 @@
 
 const mongoose = require("mongoose");
-const mongoClient = require("mongodb").MongoClient;
+// const mongoClient = require("mongodb").MongoClient;
 const dotenv = require("dotenv")
 dotenv.config();
 
@@ -18,7 +18,7 @@ const initDb = (callback) => {
     return callback(null, database);
     // then the function returns the database with a null as the error argument
   }
-  mongoClient.connect(process.env.MONGO_URL)
+  mongoose.connect(process.env.MONGO_URL)
     .then((client) => {
       client = database;
       callback(null, database);

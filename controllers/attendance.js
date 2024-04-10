@@ -1,6 +1,7 @@
 const { Attendance } = require("../models/models");
 
 const getSingleAttendanceById = async (req, res) => {
+   // #swagger.tags = ['Attendance']
   res.json(res.attendance);
 };
 

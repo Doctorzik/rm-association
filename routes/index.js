@@ -18,7 +18,7 @@ router.get("/logout", function (req, res, next) {
   });
 });
 
-router.use("/register", require("./users"));
+
 router.use("/", require("./swagger"));
 
 router.use("/attendance", require("./attendance"));
