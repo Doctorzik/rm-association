@@ -105,6 +105,8 @@ const Event = model("Event", eventSchema);
 
 const User = model("User", userSchema);
 
+
+
 module.exports = {
   Event,
   Member,
