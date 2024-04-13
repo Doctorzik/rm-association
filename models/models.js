@@ -129,8 +129,11 @@ const Event = model("Event", eventSchema);
 
 const User = model("User", userSchema);
 
+<<<<<<< HEAD
 // Create a Mongoose model based on the schema
 const MissionaryExperience = model('MissionaryExperience', missionaryExperienceSchema);
+=======
+>>>>>>> 09167c71ebc1f9f1586b79c58364faf61b21034a
 
 
 module.exports = {
