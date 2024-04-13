@@ -25,11 +25,176 @@
       "description": "Operations on members"
     },
     {
+      "name": "experience",
+      "description": "Operations for members experince"
+    },
+    {
       "name": "users",
       "description": "Operations about user"
     }
   ],
   "paths": {
+    "/experience/": {
+      "get": {
+        "tags": ["experience"],
+        "summary": "Get all the missionaries experiences",
+        "description": "Get all experiences",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/experiences"
+                }
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation exception"
+        }
+      },
+      "post": {
+        "tags": ["experience"],
+        "description": "Post a missionary experience",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "memberId": {
+                  "memberId": "id of the member with the experience",
+                  "required": true
+                },
+                "areaCompanion": {
+                  "areaCompanion": "companion as at when the experience occured",
+                  "required": true,
+                  "type": "[]"
+                },
+                "dateOfExperience": {
+                  "dateOfExperience": "the date the experience occured",
+                  "required": false
+                },
+                "description": {
+                  "description": "description of the whole experince"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "experience/{memberId}": {
+      "get": {
+        "tags": ["experience"],
+        "summary": "Get all  experiences for a particular missionary with the details of the missionary",
+        "description": "Get all experiences of a missionary",
+        "parameters": [
+          {
+            "name": "memberId",
+            "in": "path",
+            "schema": {
+              "type": "objectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/experiences"
+                }
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation exception"
+        }
+      },
+      "delete": {
+        "tags": ["experience"],
+        "summary": "Deletes a member experience",
+        "description": "delete experience",
+        "operationId": "memberidtodeleteExperience",
+        "parameters": [
+          {
+            "name": "memberidtodeleteExperience",
+            "in": "path",
+            "description": "Member id to delete experince",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid  attendance Id"
+          }
+        }
+      },
+      "put": {
+        "tags": ["experience"],
+        "summary": "Update an experience of a member",
+        "description": "Member experience to update",
+        "parameters": [
+          {
+            "name": "memberId",
+            "in": "path",
+            "required": true,
+            "type": "objectId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "description": "string"
+                },
+                "areaCompanion": {
+                  "array": ""
+                },
+                "dateOfExperience": {
+                  "dateOfExperience": "date"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
     "/attendance/": {
       "get": {
         "tags": ["attendance"],

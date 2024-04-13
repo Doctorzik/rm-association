@@ -69,6 +69,11 @@ const memberSchema = new Schema({
   },
 });
 
+
+
+
+
+
 // Define the schema for the Attendance collection
 const attendanceSchema = new Schema({
   eventId: {
@@ -91,7 +96,26 @@ const attendanceSchema = new Schema({
     default: Date.now,
   },
 });
-
+// Define the schema for the Missionary Experience collection
+const missionaryExperienceSchema = new Schema({
+  memberId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Member',
+      required: true
+  },
+  areaCompanion: [ {
+      type: String,
+      required: true
+  }],
+  dateOfExperience: {
+      type: Date,
+      
+  },
+  description: {
+      type: String,
+      required: true
+  }
+});
 // Create a Mongoose model based on the schema
 
 // Create a Mongoose model based on Attendance  schema
@@ -105,9 +129,12 @@ const Event = model("Event", eventSchema);
 
 const User = model("User", userSchema);
 
+// Create a Mongoose model based on the schema
+const MissionaryExperience = model('MissionaryExperience', missionaryExperienceSchema);
 
 
 module.exports = {
+  MissionaryExperience,
   Event,
   Member,
   Attendance,
