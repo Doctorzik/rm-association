@@ -95,7 +95,7 @@
         }
       }
     },
-    "experience/{memberId}": {
+    "/experience/{memberId}": {
       "get": {
         "tags": ["experience"],
         "summary": "Get all  experiences for a particular missionary with the details of the missionary",
