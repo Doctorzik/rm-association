@@ -1,142 +1,60 @@
 const { model, Schema } = require("mongoose");
 
 const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  hash: String,
-  salt: String,
+  email: { type: String, required: true, unique: true }, 
+  username: { type: String, required: true },
+  hash: String, // Used for local authentication
+  salt: String, 
+  googleId: { type: String, unique: true, sparse: true },
+  githubId: { type: String, unique: true, sparse: true },
 });
 
 const eventSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  location: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    required: true,
-  },
+  name: { type: String, required: true },
+  location: { type: String, required: true },
+  description: { type: String, required: true },
+  date: { type: Date, required: true },
 });
 
 const memberSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+  name: { type: String, required: true },
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true, 
+    lowercase: true, 
+    match: [/\S+@\S+\.\S+/, "Please enter a valid email"]
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    // Validate email format using regex
-    match: [/\S+@\S+\.\S+/, "Please enter a valid email"],
-  },
-
-  missionServed: {
-    type: String,
-    required: true,
-  },
-  missionPresident: [
-    {
-      type: String,
-    },
-  ],
-  returnDate: {
-    type: Date,
-    required: true,
-  },
-  currentLocation: {
-    type: String,
-    required: true,
-  },
-  hobbies: [String],
-
-  bestquote: {
-    type: String,
-    required: true,
-    default: "I Love my Mission",
-  },
+  missionServed: { type: String, required: true },
+  missionPresident: { type: [String], default: [] },
+  returnDate: { type: Date, required: true },
+  currentLocation: { type: String, required: true },
+  hobbies: { type: [String], default: [] },
+  bestquote: { type: String, default: "I Love my Mission" },
 });
 
-
-
-
-
-
-// Define the schema for the Attendance collection
 const attendanceSchema = new Schema({
-  eventId: {
-    type: Schema.Types.ObjectId,
-    ref: "Event",
-    required: true,
-  },
-  memberId: {
-    type: Schema.Types.ObjectId,
-    ref: "Member",
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: ["present", "absent", "RSVP"],
-    required: true,
-  },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
+  eventId: { type: Schema.Types.ObjectId, ref: "Event", required: true },
+  memberId: { type: Schema.Types.ObjectId, ref: "Member", required: true },
+  status: { type: String, enum: ["present", "absent", "RSVP"], required: true },
+  timestamp: { type: Date, default: Date.now },
 });
-// Define the schema for the Missionary Experience collection
+
 const missionaryExperienceSchema = new Schema({
-  memberId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Member',
-      required: true
-  },
-  areaCompanion: [ {
-      type: String,
-      required: true
-  }],
-  dateOfExperience: {
-      type: Date,
-      
-  },
-  description: {
-      type: String,
-      required: true
-  }
+  memberId: { type: Schema.Types.ObjectId, ref: "Member", required: true },
+  areaCompanion: { type: [String], default: [] },
+  dateOfExperience: { type: Date },
+  description: { type: String, required: true },
 });
-// Create a Mongoose model based on the schema
 
-// Create a Mongoose model based on Attendance  schema
-const Attendance = model("Attendance", attendanceSchema);
-// Create a Mongoose model based on Member  schema
-
-const Member = model("Member", memberSchema);
-// Create a Mongoose model based on Event  schema
-
-const Event = model("Event", eventSchema);
-
-const User = model("User", userSchema);
-
-// Create a Mongoose model based on the schema
-const MissionaryExperience = model('MissionaryExperience', missionaryExperienceSchema);
-
+// Indexes for performance optimization
+memberSchema.index({ email: 1 });
+attendanceSchema.index({ eventId: 1, memberId: 1 });
 
 module.exports = {
-  MissionaryExperience,
-  Event,
-  Member,
-  Attendance,
-  User,
+  MissionaryExperience: model("MissionaryExperience", missionaryExperienceSchema),
+  Event: model("Event", eventSchema),
+  Member: model("Member", memberSchema),
+  Attendance: model("Attendance", attendanceSchema),
+  User: model("User", userSchema),
 };

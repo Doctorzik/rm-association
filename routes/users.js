@@ -2,8 +2,7 @@ const router = require("express").Router();
 const usercontroller = require("../controllers/users.js");
 
 const passport = require("passport");
-const passwordUtils = require("../lib/passwordUtils");
-const { User } = require("../models/models");
+
 router.post("/login", passport.authenticate("local"), (req, res) => {
   req.session.user = req.user;
   res.status(200).json({ message: "You logged in" });
