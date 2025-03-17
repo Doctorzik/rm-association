@@ -93,7 +93,7 @@ app.use(cors({ origin: "*" }));
 app.use("/", require("./routes/index.js"));
 
 app.get("/", (req, res) => {
-  console.log(req.session)
+ 
 	res.send(
 		req.session.user !== undefined
 			? `Logged in as ${req.session.user.username}`

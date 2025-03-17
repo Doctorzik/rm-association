@@ -7,7 +7,7 @@ let database; // Holds the database connection
 // Function to initialize MongoDB connection
 const initDb = async (callback) => {
 	if (database) {
-		console.log("✅ Database already initialized.");
+		console.log("Database already initialized.");
 		return callback(null, database);
 	}
  
@@ -15,10 +15,10 @@ const initDb = async (callback) => {
 		const connection = await mongoose.connect(process.env.MONGO_URL);
 
 		database = connection.connection; // Assign the database connection
-		console.log("🚀 MongoDB connected successfully!");
+		
 		callback(null, database);
 	} catch (error) {
-		console.error("❌ MongoDB connection error:", error);
+		console.error("MongoDB connection error:", error);
 		callback(error);
 	}
 };
