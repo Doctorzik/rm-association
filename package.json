@@ -4,7 +4,7 @@
   "description": "This is an api for the return missionary association in Bayelsa State",
   "main": "server.js",
   "scripts": {
-    "start": "npx kill-port 5000 && nodemon server.js",
+    "start": "nodemon server.js",
     "swagger": "node ./swagger.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
