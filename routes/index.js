@@ -1,14 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
+const auth = require("../middleware/authenticate")
 const passport = require("passport");
-const passwordUtils = require("../lib/passwordUtils");
-const { User } = require("../models/models");
 
-router.post("/login", passport.authenticate("local"), (req, res) => {
-  req.session.user = req.user;
-  res.status(200).json({ message: "You logged in" });
-});
+
+
 router.get("/logout", function (req, res, next) {
   req.logout(function (err) {
     if (err) {
@@ -20,10 +16,13 @@ router.get("/logout", function (req, res, next) {
 
 
 router.use("/", require("./swagger"));
-router.use("/experience", require("./experience"))
+router.use("/experience",   require("./experience"))
 router.use("/attendance", require("./attendance"));
 router.use("/users", require("./users"));
 router.use("/events", require("./events"));
-router.use("/members", require("./members"));
+router.use("/members", auth.isAuthenticated, require("./members"));
+
+
 
 module.exports = router;
+
